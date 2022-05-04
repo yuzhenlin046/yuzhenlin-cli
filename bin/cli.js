@@ -7,31 +7,19 @@ const chalk = require('chalk');
 
 program
   .command('create <app-name>')
-  .description('create a new project')
-  .option('-f, --force', 'overwrite target directory if it exist') // 是否强制创建，当文件夹已经存在
+  .description('创建一个新项目')
+  .option('-f, --force', '覆盖目标目录（如果存在）') // 是否强制创建，当文件夹已经存在
   .action((name, options) => {
     // 在 create.js 中执行创建任务
     require('../lib/create.js')(name, options)
   })
 
-  // 配置 config 命令
 program
-  .command('config [value]')
-  .description('inspect and modify the config')
-  .option('-g, --get <path>', 'get value from option')
-  .option('-s, --set <path> <value>')
-  .option('-d, --delete <path>', 'delete option from config')
-  .action((value, options) => {
-    console.log(value, options)
-  })
-
-// 配置 ui 命令
-program
-  .command('ui')
-  .description('start add open roc-cli ui')
-  .option('-p, --port <port>', 'Port used for the UI Server')
-  .action((option) => {
-    console.log(option)
+  .command('deploy')
+  .description('打包部署项目')
+  .action(() => {
+    // 部署项目
+    require('../lib/deploy.js')()
   })
 
 program
@@ -48,7 +36,7 @@ program
       width: 120,
       whitespaceBreak: true
     }));
-    console.log(`\r\nRun ${chalk.cyan(`yzl <command> --help`)} for detailed usage of given command\r\n`)
+    console.log(`\r\n执行 ${chalk.cyan(`yzl <command> --help`)} 获取给定命令的详细用法\r\n`)
   })
 
 // 解析用户执行命令传入参数
